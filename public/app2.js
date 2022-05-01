@@ -28,12 +28,12 @@ loginBtn.onclick = (()=>{
 const startBtn = document.querySelector('#btnStartGame')
 startBtn.disabled = false;
 startBtn.addEventListener('click', () =>{
-  console.log('Add playerInfo complete!')
+
     wait.style.display = 'none'
     userTab.style.display = 'flex'
     matching.style.display = 'flex'
 })
-console.log(startBtn)
+
 
 // const nextBtn = document.querySelector('#goToTTT')
 // nextBtn.addEventListener('submit', goToTTT)

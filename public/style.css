@@ -332,7 +332,7 @@ body{
 
 
   
-  .playerX {
+  .playerSign {
     color: #fff;
   }
   
@@ -533,5 +533,6 @@ body{
 /* Matching Area */
 
 .display-4{
+  color: white;
   height: 6rem;
 }

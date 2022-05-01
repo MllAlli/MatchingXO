@@ -1,5 +1,6 @@
 const ref = firebase.database().ref("Game")
 const refScore = firebase.database().ref("Scores")
+const playerSign = document.querySelector(".playerSign")
 
 ref.on("value", snapshot => {
     getGameInfo(snapshot)
@@ -65,12 +66,82 @@ function getGameInfo(snapshot){
             document.querySelector("#btnCancel-o").disabled = true
             const boxes = document.querySelectorAll(".table-col")
             boxes.forEach(box => {box.addEventListener("click", inputBox)})
+            boxes.forEach(box => {box.onclick = ()=>{}})
         }
         else if (gameInfos.status === "finish") {
             document.querySelector("#btnCancel-x").disabled = true
             document.querySelector("#btnCancel-o").disabled = true
             const boxes = document.querySelectorAll(".table-col")
             boxes.forEach(box => {box.removeEventListener("click", inputBox)})
+        }
+        else if (gameInfos.status === "change") {
+            checkWinner()
+            document.querySelector("#btnStartGame").disabled = true
+            document.querySelector("#btnCancel-x").disabled = true
+            document.querySelector("#btnCancel-o").disabled = true
+            const boxes = document.querySelectorAll(".table-col")
+            boxes.forEach(box => {box.removeEventListener("click", inputBox)})
+            boxes.forEach(box => {box.onclick = function(){
+
+                if(gameInfos.status != "change") return false
+                
+                if(isKeep == true){
+                    if((box.innerHTML).includes('X') || (box.innerHTML).includes('O')){
+                        alert(`This box is already filled.`)
+                        return false
+                    }
+                    box.innerHTML = "<p class='display-4'>" + gameInfos.turn + "</p>"
+                    let id = box.id
+                    ref.child("game-1").child("tables").update({
+                        [id]: gameInfos.turn
+        
+                    })
+                    if(gameInfos.turn == 'X'){
+                        ref.child("game-1").update({
+                            turn: "O"
+                        })
+                    }else{
+                        ref.child("game-1").update({
+                            turn: "X"
+                        })
+                    }
+                    isKeep = false
+                    gameInfos.status = "start"
+                    
+                    ref.child("game-1").update({
+                        status: "start",
+                    })
+
+                }else{
+                    changePosition(this)
+                }
+            };})
+        }
+        else if (gameInfos.status === "switch") {
+            checkWinner()
+
+            document.querySelector("#btnStartGame").disabled = true
+            document.querySelector("#btnCancel-x").disabled = true
+            document.querySelector("#btnCancel-o").disabled = true
+            const boxes = document.querySelectorAll(".table-col")
+            boxes.forEach(box => {box.removeEventListener("click", inputBox)})
+            boxes.forEach(box => {
+                if(box.innerHTML == "<p class='display-4'>X</p>"){
+                    console.log(box)
+                    //document.querySelector(`#${box} p`).innerHTML = 'O'
+                    ref.child("game-1").child("tables").update({
+                        [id]: 'O'
+        
+                    })
+                }else if(box.innerHTML == "<p class='display-4'>O</p>"){
+                    console.log(box)
+                    //document.querySelector(`#${box} p`).innerHTML = 'X'
+                    ref.child("game-1").child("tables").update({
+                        [id]: 'X'
+        
+                    })
+                }
+            })
         }
         else{
             document.querySelector("#btnCancel-x").disabled = false
@@ -118,6 +189,7 @@ function joinGame(event){
                 [tmpID]: currentUser.uid,
                 [tmpEmail]: currentUser.email
             })
+            playerSign.innerHTML = `${player}`.toUpperCase()
             console.log(currentUser.email+" added.");
             event.currentTarget.disabled = true;
         }
@@ -234,14 +306,14 @@ function checkWinner(){
                 refScore.once("value", snapshot => {
                     scores = snapshot.val()
                     if (!scores || !scores[id]){
-                        refScore.child(id).update({
-                            win: 1
+                        refScore.child(currentUser.uid).update({
+                            [id]: 1
                         })
                     }
                     else{
                         score = scores[id]
-                        refScore.child(id).update({
-                            win: parseInt(score) + 1
+                        refScore.child(currentUser.uid).update({
+                            [id]: parseInt(score) + 1
                         })
                     }
                 })
@@ -263,34 +335,126 @@ function checkWinner(){
                 id1 = data[`user-x-id`]
                 id2 = data[`user-o-id`]
 
+                // refScore.once("value", snapshot => {
+                //     scores = snapshot.val()
+                //     if (!scores || !scores[id1]){
+                //         refScore.update({
+                //             [id1]: 1
+                //         })
+                //     }
+                //     else{
+                //         score = scores[id1]
+                //         refScore.update({
+                //             [id1]: parseInt(score) + 1
+                //         })
+                //     }
+
+                //     if (!scores || !scores[id2]){
+                //         refScore.update({
+                //             [id2]: 1
+                //         })
+                //     }
+                //     else{
+                //         score = scores[id2]
+                //         refScore.update({
+                //             [id2]: parseInt(score) + 1
+                //         })
+                //     }
+                //     return
+                // })
+                id = data[`user-${turn.toLowerCase()}-id`]
                 refScore.once("value", snapshot => {
                     scores = snapshot.val()
-                    if (!scores || !scores[id1]){
-                        refScore.child(id1).update({
-                            win: 1
+                    if (!scores || !scores[id]){
+                        refScore.child(currentUser.uid).update({
+                            draw: 1
                         })
                     }
                     else{
-                        score = scores[id1]
-                        refScore.child(id1).update({
-                            win: parseInt(score) + 1
+                        score = scores[id]
+                        refScore.child(currentUser.uid).update({
+                            draw: parseInt(score) + 1
                         })
                     }
-
-                    if (!scores || !scores[id2]){
-                        refScore.child(id2).update({
-                            win: 1
-                        })
-                    }
-                    else{
-                        score = scores[id2]
-                        refScore.child(id2).update({
-                            win: parseInt(score) + 1
-                        })
-                    }
-                    return
                 })
             }
+        }
+    })
+}
+
+const btnChangePosition = document.querySelector("#btnChangePosition");
+btnChangePosition.addEventListener("click", chooseChangePosition)
+
+function chooseChangePosition(event){
+    ref.child("game-1").update({
+        status: "change"
+    })
+
+}
+
+const btnSwitchPawn = document.querySelector("#btnSwitchPawn");
+btnSwitchPawn.addEventListener("click", switchPawn)
+
+function switchPawn(event){
+    ref.child("game-1").update({
+        status: "switch"
+    })
+
+}
+
+let isKeep = false;
+
+function changePosition(that){
+    // console.log(that)
+    // console.log(that.id)
+    // if(!state) { //this means if the state is false (i.e. no piece selected
+    //     state = true; //piece has been selected
+    //     currentPiece = that.innerHTML; //get the current piece selected
+    //     currentCell = that; //get the current cell selection
+    // }
+    // else { //else, you are moving a piece
+    //     that.innerHTML = currentPiece; //Set the selected space to the piece that was grabbed
+    //     currentCell.innerHTML = ""; //remove the piece from its old location
+    //     state = false; //piece has been placed, so set state back to false
+    // }
+
+
+    ref.child("game-1").once("value", snapshot => {
+        data = snapshot.val() //db objects
+        currentUser = firebase.auth().currentUser
+        //id1 = this.currentTarget.id //row-1-col-1
+        //console.log(this.currentTarget)
+        // id2 = point2.currentTarget.id
+        
+
+        if (data.turn === "X" && data["user-x-email"] === currentUser.email && data["tables"][that.id]){
+            ref.child("game-1").child("tables").update({
+                [that.id]: ``
+
+            })
+            document.querySelector(`#${that.id} p`).innerHTML = ''
+            console.log('1')
+            isKeep = true;
+            // if(document.querySelector(`#${that.id} p`).innerHTML = ''){
+            //     ref.child("game-1").child("tables").update({
+            //         [id1]: data.turn
+    
+            //     })
+            // }
+
+        }
+        else if (data.turn === "O" && data["user-o-email"] === currentUser.email && data["tables"][that.id]){
+            ref.child("game-1").child("tables").update({
+                [that.id]: ``
+
+            })
+            document.querySelector(`#${that.id} p`).innerHTML = ''
+            console.log('1')
+            isKeep = true;
+            // ref.child("game-1").child("tables").update({
+            //     [id]: data.turn
+            // })
+
         }
     })
 }
