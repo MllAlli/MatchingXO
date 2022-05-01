@@ -1,0 +1,670 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matching XO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mockup.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <script src="/__/firebase/8.10.1/firebase-app.js"></script>
+    <script src="/__/firebase/8.10.1/firebase-analytics.js"></script>
+    <script src="/__/firebase/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+<body>
+    <div class="container-fluid blur-bg">
+        <div class="row justify-content-center">
+            <!-- Dropdown Menu -->
+            <div class="nav-item dropdown logged-in"
+            style="position: absolute;
+                        top: 0%;
+                        right: 0%;
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+                        align-content: flex-end;">
+                <a class="nav-link dropdown-toggle" href="#" id="user-email" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+                </a>
+                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="user-email">
+                <li><a class="dropdown-item" href="#">Stat</a></li>
+                <li><a class="dropdown-item" id="logout-btn" href="#">Log out</a></li>
+                </ul>
+            </div>
+            <!-- Dropdown Menu -->
+
+            <!-- Login & Sign Up -->
+            <div class="homepage">
+                <div class="col-sm-12 col-md-6">
+                    <img class="logo-img" src="white-ver.png">
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="wrapper">
+                        <div class="title-text">
+                        <div class="title login">
+                            Login
+                        </div>
+                        <div class="title signup">
+                            Sign Up
+                        </div>
+                        </div>
+                        <div class="form-container">
+                        <div class="slide-controls">
+                            <input type="radio" name="slide" id="login" checked>
+                            <input type="radio" name="slide" id="signup">
+                            <label for="login" class="slide login">Login</label>
+                            <label for="signup" class="slide signup">Sign Up</label>
+                            <div class="slider-tab"></div>
+                        </div>
+                        <div class="form-inner">
+                            <form class="login" id="login-form">
+                                <div class="field">
+                                    <input type="text" id="input-email-login" placeholder="Email Address" required>
+                                </div>
+                                <div class="field">
+                                    <input type="password" id="input-password-login" placeholder="Password" required>
+                                </div>
+                                <div class="field btn">
+                                    <div class="btn-layer"></div>
+                                    <input type="submit" id="login-submit" value="Login">
+                                </div>
+                                <div class="tutorial">
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal">How to play ?</a>
+                                </div>
+                            </form>
+                            <form class="signup" id="signup-form">
+                                <div class="field">
+                                    <input type="text" id="input-email-signup" placeholder="Email Address" required>
+                                </div>
+                                <div class="field">
+                                    <input type="password" id="input-password-signup" placeholder="Password" required>
+                                </div>
+                                <div class="field btn">
+                                    <div class="btn-layer"></div>
+                                    <input type="submit" id="signup-submit" value="Sign Up">
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Login & Sign Up -->
+
+            
+            
+
+            <!-- Waiting Page -->
+            <div class="waiting logged-in">
+                <!-- <div class="loader"></div> -->
+                <div class="col-md-1"></div>
+                <div class="col-sm-12 col-md-10">
+                    <form class="form-inline row">
+                        <div class="form-group mb-2 row col-8">
+                        <label for="inputPlayer-X" class="col-form-label col-2">Player X: </label>
+                        <div class="col-10">
+                            <input readonly type="text" class="form-control" id="inputPlayer-x" placeholder="Player X">
+                        </div>
+                        </div>
+                        <div class="form-group mb-2 col-4">
+                        <button type="button" id="btnJoin-x" class="btn btn-light btn-join">Join</button>
+                        <button type="button" id="btnCancel-x" class="btn btn-secondary btn-cancel-join-game">Cancel</button>
+                        </div>
+                    </form>
+                
+                    <form class="form-inline row">
+                        <div class="form-group mb-2 row col-8">
+                        <label for="inputPlayer-o" class="col-form-label col-2">Player O: </label>
+                        <div class="col-10">
+                            <input readonly type="text" class="form-control" id="inputPlayer-o" placeholder="Player O">
+                        </div>
+                        </div>
+                        <div class="form-group mb-2 col-4">
+                        <button type="button" id="btnJoin-o" class="btn btn-light btn-join">Join</button>
+                        <button type="button" id="btnCancel-o" class="btn btn-secondary btn-cancel-join-game">Cancel</button>
+                        </div>
+                    </form>
+                    <h1 id="wait">Waiting for another player</h1>
+                    <button type="button" id="btnStartGame" class="btn btn-light">START GAME</button>
+                </div>
+                <div class="col-md-1"></div>
+                </div>
+            <!-- Waiting Page -->
+
+
+            <!-- Matching Page -->
+
+                <div class="matching">
+                    <div class="col-2"></div>
+                    <div class="col-md-4 col-lg-8">
+                        <!-- Matching Board -->
+                        <div class="game-container">
+                            
+                            <div class="card">
+                            <!-- Backcard -->
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <!--Cardfront-->
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bat.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <!-- Backcard -->
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <!--Cardfront-->
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bat.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <!-- Backcard -->
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <!--Cardfront-->
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bat.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bat.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bones.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bones.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bones.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Bones.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Cauldron.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Cauldron.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Cauldron.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Cauldron.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Eye.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Eye.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Eye.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Eye.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Skull.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Skull.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Skull.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Skull.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Pumpkin.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Pumpkin.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Pumpkin.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Pumpkin.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Ghost.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Ghost.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Ghost.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Ghost.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Dracula.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Dracula.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Dracula.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/Dracula.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/bank.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/bank.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/bank.png">
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-back card-face">
+                                <img class="spider" src="Assets/Images/Logo_W.png">
+                            </div>
+                            <div class="card-front card-face">
+                                
+                                <img class="card-value" src="Assets/Images/bank.png">
+                            </div>
+                            </div>
+
+                            <div class="game-info-container">
+                                <div class="game-info">
+                                    Pawn: <span id="Score">0</span>
+                                    <!-- Flips <span id="flips">0</span> -->
+                                </div>
+                                <div class="game-info">
+                                Special Items: <span id="UltraScore">0</span>
+                                
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Matching Board -->
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-light" type="submit" id="goToTTT">Next</button>
+                    </div>
+                </div>
+
+
+            <!-- Matching Page -->
+
+            <!-- TTT Page -->
+            
+            <div class="ttt">
+                <div class="col-md-1"></div>
+                <div class="col-sm-12 col-md-8">
+                    <section class="display announcer hide">
+                        <span id="user-score" class="display-score" style="color: white;"></span>
+                    </section>
+                    <div class="container-fluid justify-content-center mb-2 board">
+
+                        <div class="row" id="row-1" style="height:auto;">
+                        <div class="col border justify-content-center align-items-center table-col" id="row-1-col-1"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-1-col-2"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-1-col-3"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-1-col-4"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-1-col-5"><p class="display-4"></p></div>
+                        </div>
+                        <div class="row" id="row-2" style="height:auto;">
+                        <div class="col border justify-content-center align-items-center table-col" id="row-2-col-1"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-2-col-2"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-2-col-3"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-2-col-4"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-2-col-5"><p class="display-4"></p></div>
+                        </div>
+                        <div class="row" id="row-3" style="height:auto;">
+                        <div class="col border justify-content-center align-items-center table-col" id="row-3-col-1"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-3-col-2"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-3-col-3"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-3-col-4"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-3-col-5"><p class="display-4"></p></div>
+                        </div>
+                        <div class="row" id="row-4" style="height:auto;">
+                        <div class="col border justify-content-center align-items-center table-col" id="row-4-col-1"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-4-col-2"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-4-col-3"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-4-col-4"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-4-col-5"><p class="display-4"></p></div>
+                        </div>
+                        <div class="row" id="row-5" style="height:auto;">
+                        <div class="col border justify-content-center align-items-center table-col" id="row-5-col-1"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-5-col-2"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-5-col-3"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-5-col-4"><p class="display-4"></p></div>
+                        <div class="col border justify-content-center align-items-center table-col" id="row-5-col-5"><p class="display-4"></p></div>
+                        </div>
+                    </div>
+                    <section class="row justify-content-center controls">
+                        <button class="btn btn-light" id="reset">วางหมาก</button>
+                        <button class="btn btn-light" id="reset">สลับตำแหน่งหมาก</button>
+                        <button class="btn btn-light" id="reset">ใช้ไอเทมพิเศษ</button>
+                    </section>
+                </div>
+                <div class="col-md-3">
+
+                    <section class="display">
+                        <span class="display-player playerX">X<sub class="display-pawn playerX">8</sub></span>
+                    </section>
+                </div>
+            </div>
+            
+
+            <!-- TTT Page -->
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade modal-tutorial" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Matching XO Tutorial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col">
+                                <img src="matching-part.jpg" style="width: 70%;">
+                                <h4>Matching Cards</h4>
+                                <p>ผู้เล่นจะต้องเล่นเกมจับคู่ไพ่เพื่อสะสมจำนวนหมากในมือโดยไพ่ 1 คู่ที่จับคู่ได้จะเท่ากับหมาก 1 ตัว หากผู้เล่นสามารถจับคู่ไพ่ที่มีเลขเดียวกันได้ 2 คู่ติดกันจะได้รับไอเท็มพิเศษ ซึ่งสามารถใช้สลับหมากของตนเองกับฝั่งตรงข้ามทั้งหมดได้ โดยผู้เล่นแต่ละฝั่งสามารถเล่นเกมจับคู่ไพ่ได้เรื่อยๆ จนกว่าจะหาคู่ไพ่ไม่พบ</p>
+                            </div>
+                            <div class="col">
+                                <img src="tic-tac-toe.jpg" style="width: 70%;">
+                                <h4>Tic-Tac-Toe</h4>
+                                <p>เริ่มเล่นเมื่อจบเกมจับคู่ไพ่ โดยผลคะแนนจากเกมจับคู่ไพ่จะกลายเป็นจำนวนหมากที่ผู้เล่นมี เมื่อผู้เล่นเลือกวางหมากในกระดานแล้ว ตาต่อไปผู้เล่นสามารถเลือกได้ว่าจะวางหมากเพิ่มหรือจะสลับตำแหน่งของหมากตนเองกับหมากของฝ่ายตรงข้ามบนกระดาน ผู้เล่นจะชนะก็ต่อเมื่อสามารถวางหมากเรียงกัน 5 ตัว 
+                                    หากฝ่ายใดฝ่ายหนึ่งไม่มีจำนวนหมากเหลืออยู่และยังไม่มีผู้ชนะ จะเริ่มจับเวลา 3 นาที ภายใน 3 นาทีนี้หากยังไม่มีผู้ชนะ เกมจะถูกปรับเป็นเสมอทันที</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Matching Cards</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col">
+                                <img src="matching-part.jpg" style="width: 100%;">
+                                <p>ระบบจะสุ่มผู้เล่นที่ได้เริ่มก่อนจากนั้นผู้เล่นจะต้องเปิดไพ่เพื่อจับคู่ไพ่ที่มีเลขไพ่ตรงกัน เมื่อผู้เล่นจับคู่ไพ่ได้จะได้รับหมาก 1 ตัวและได้จับไพ่ต่อ หากผู้เล่นเปิดไพ่ 2 ใบแล้วตัวเลขไม่ตรงกัน จะสลับให้ผู้เล่นฝั่งตรงข้ามเป็นฝ่ายเปิดไพ่</p>
+                            </div>
+                            <div class="col">
+                                <img src="matching-part.jpg" style="width: 100%;">
+                                <p>หากผู้เล่นสามารถเปิดไพ่ที่มีตัวเลขเดียวกันได้ 2 คู่ หรือ 4 ใบติดต่อกัน ผู้เล่นจะได้รับไอเท็มพิเศษเพื่อใช้ในการเล่น Tic-Tac-Toe ต่อไป</p>
+                            </div>
+                            <div class="col">
+                                <img src="matching-part.jpg" style="width: 100%;">
+                                <p>กรณีที่ผู้เล่นคนใดคนหนึ่งสามารถจับคู่ไพ่ได้ 13 คู่ จะจบเกมจับคู่ไพ่ทันที หมายความว่าผู้เล่นคนดังกล่าวจะมีหมากทั้งหมด 13 ตัว และผู้เล่นฝั่งตรงข้ามจะได้รับหมาก 5 ตัวโดยอัตโนมัติเพื่อใช้ในการเล่น Tic-Tac-Toe ต่อไป</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tic-Tac-Toe</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col">
+                                <img src="tic-tac-toe.jpg" style="width: 100%;">
+                                <p>ในตาแรก ผู้เล่นจะต้องวางหมกของตนเองลงบนกระดาน ในตาตัดไปผู้เล่นจะสามารถเลือกได้ว่าจะวางหมากต่อหรือจะเลือกเปลี่ยนตำแหน่งของหมากฝั่งตนที่อยู่บนกระดานโดยการกดปุ่ม “สลับตำแหน่งหมาก” แล้วจึงเลือกหมากที่จะสลับและตำแหน่งใหม่ที่จะวาง ผู้เล่นจะชนะเมื่อวางหมากเรียงกัน 5 ตัวได้</p>
+                            </div>
+                            <div class="col">
+                                <img src="tic-tac-toe.jpg" style="width: 100%;">
+                                <p>หากฝั่งใดฝั่งหนึ่งไม่เหลือหมากในมือแล้ว ระบบจะเริ่มนับเวลาถอยหลัง 3 นาที หากไม่มีผู้ชนะ เกมจะถูกปรับเป็นเสมอ</p>
+                            </div>
+                            <div class="col">
+                                <img src="tic-tac-toe.jpg" style="width: 100%;">
+                                <p>ไอเท็มพิเศษจะถูกใช้เมื่อผู้เล่นกดปุ่ม “ใช้ไอเท็มพิเศษ” จากนั้นหมากทั้งหมดบนกระดานจะถูกสลับฝั่งกันทันที</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDZ37qIupmsy4ur6Ma6rnyzFtiZvJaSGnM",
+            authDomain: "matchingxo.firebaseapp.com",
+            databaseURL: "https://matchingxo-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "matchingxo",
+            storageBucket: "matchingxo.appspot.com",
+            messagingSenderId: "130279814616",
+            appId: "1:130279814616:web:a38a90759e9fbefb00eead",
+            measurementId: "G-TMMBZFZQ72"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+ 
+</body>
+<script type="text/javascript" src="auth.js"></script>
+<script type="text/javascript" src="app2.js"></script>
+<script type="text/javascript" src="game.js"></script>
+</html>

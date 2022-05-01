@@ -1,0 +1,537 @@
+:root{
+    --gradient: linear-gradient(
+        45deg,
+        #8E0E00,
+        #1F1C18
+    );
+}
+
+body{
+    background-image: var(--gradient);
+    background-size: 400%;
+    animation: bg-animation 10s infinite alternate;
+    padding: 1%;
+    
+}
+
+@keyframes bg-animation{
+    0% {background-position: left;}
+    100% {background-position: right;}
+}
+
+.blur-bg{
+    height: 100%;
+    margin: auto;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 5px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.row{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group{
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-sm-12, .col-md-6, .col-md-8, .col-md-3{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.col-md-3{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: flex-end;
+}
+
+.dropdown{
+  font-size: larger;
+  width: auto; 
+}
+
+.nav-link{
+  color: white!important;
+}
+
+.board{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+}
+
+.logo{
+    display: flex;
+    width: 100%; 
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.logo-img{
+    width: 80%;
+
+}
+
+.home-left{
+    display: flex;
+    width: 50%;
+}
+
+.home-right{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+}
+
+.home-form-group{
+    width: 100%;
+    position: relative;
+    margin: 6% auto;
+    padding: 5px;
+    overflow: hidden;
+
+}
+
+.modal{
+  width: 200%;
+  
+}
+
+.modal-body{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.modal-xl{
+  max-width: 1500px;
+}
+
+.tutorial-match{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    padding: 0 40px;
+    float: left;
+}
+
+.tutorial-xo{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.btn{
+  margin: 1%;
+}
+
+.col{
+    display: flex;
+    flex-direction: column;
+    width: 33.33%;
+    align-items: center;
+    padding: 0 20px;
+    float: left;
+}
+
+.waiting, .matching{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.found-player{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+
+
+
+.start {
+  margin: 3%;
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.loader {
+    margin: 5%;
+    border: 16px solid transparent;
+    border-radius: 50%;
+    border-top: 16px solid white;
+    border-bottom: 16px solid white;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+.user-tab{
+    width: 100%;
+    margin: 0;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.dropdown {
+    position: relative;
+    cursor: pointer;
+    right: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 20%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+  }
+
+/* Board Area */
+
+.col-2{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.display{
+  margin-bottom: 5rem;
+}
+
+.display-player {
+    color: white;
+    font-size: 10em;
+    font-weight: 600;
+    text-align: center;
+    
+  }
+
+.display-pawn{
+    font-size: 0.5em;
+    font-weight: 500;
+}
+  
+  .hide {
+    display: none;
+  }
+  
+
+
+  
+  .playerX {
+    color: #fff;
+  }
+  
+  .playerO {
+    color: #fff;
+  }
+  
+  .controls {
+    margin-top: 5em;
+  }
+  
+  
+  #reset {
+    height: 100%;
+    width: 10em;
+    z-index: 1;
+    position: relative;
+    background: white;
+    border: none;
+    color: #000;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+/* Board Area */
+
+/* Matching Area */
+
+.game-info-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .game-info {
+    color: white;
+    font-size: 2em;
+  }
+  
+  .game-container {
+    margin-bottom: 2vh;
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    grid-gap: 10px;
+    justify-content: center;
+    perspective: 500px;
+    
+    
+  }
+  
+  .card {
+    
+    position: relative;
+    cursor: pointer;
+    height: 9rem;
+    width: 6rem;
+  }
+  
+  .card-face {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+    transition: transform 500ms ease-in-out;
+    backface-visibility: hidden;
+  }
+  
+  .card.visible .card-back {
+    transform: rotateY(-180deg); 
+  }
+  
+  .card.visible .card-front {
+    transform: rotateY(0); 
+  }
+  
+  .card.matched .card-front .card-value {
+    animation: dance 1s linear infinite 500ms;
+  }
+  
+  .card-back {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 5px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    transform: rotateY(0); 
+    width: 100%;
+    height: 100%;
+  }
+  
+  .cob-web {
+    position: absolute;
+    transition: width 100ms ease-in-out, height 100ms ease-in-out;
+    width: 47px;
+    height: 47px;
+  }
+  
+  .card-face:hover .cob-web {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .spider {
+    width: 100%;
+    align-self: center;
+    transition: transform 100ms ease-in-out;
+    transform: translateY(-10px);
+  }
+  
+  .card-back:hover .spider {
+    transform: translateY(0);
+  }
+  
+  .card-value {
+    position: relative;
+    transition: transform 100ms ease-in-out;
+    transform: scale(.9);
+  }
+  
+  .card-front:hover .card-value {
+    transform: scale(1);
+  }
+  
+  .card-front {
+    background-color: #c2c2c2;
+    border-color: #333;
+    transform: rotateY(180deg);
+  }
+  
+  .overlay-text {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: Creepy, serif;
+    transition: background-color 500ms, font-size 500ms;
+  }
+  
+  .overlay-text-small {
+    font-size: .3em;
+  }
+  
+  .overlay-text.visible {
+    display: flex;
+    animation: overlay-grow 500ms forwards;
+  }
+  
+  @keyframes dance {
+    0%, 100% {
+      transform: rotate(0)
+    }
+    25% {
+      transform: rotate(-30deg)
+    }
+    75% {
+      transform: rotate(30deg)
+    }
+  }
+  
+  @keyframes overlay-grow {
+    from {
+      background-color: rgba(0, 0, 0, 0);
+      font-size: 0;
+    }
+    to {
+      background-color: rgba(0, 0, 0, .8);
+      font-size: 10em;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .game-container {
+      grid-template-columns: repeat(3, auto)
+    }
+  
+    .game-info-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+/* Matching Area */
+
+.display-4{
+  height: 6rem;
+}
