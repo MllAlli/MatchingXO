@@ -1,0 +1,227 @@
+:root{
+  --gradient: linear-gradient(
+      45deg,
+      #8E0E00,
+      #1F1C18
+  );
+}
+
+.blur-bg{
+  width: 95%;
+  height: 95%;
+  margin: auto;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 5px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+* {
+    box-sizing: border-box;
+  }
+  
+  html {
+    min-height: 100vh;
+    cursor: url(Assets/Cursors/Ghost.cur), auto;
+    font-family: Lunacy;
+  }
+  
+  body {
+    margin: 0;
+    background-image: var(--gradient);
+    background-size: 400%;
+    animation: bg-animation 10s infinite alternate;
+   
+    
+  }
+  .container{
+    display: flex;
+    justify-content: center;
+   
+    
+  }
+  .page-title {
+    color: white;
+    font-family: Creepy, serif;
+    font-weight: normal;
+    text-align: center;
+    font-size: 2em;
+  }
+  
+  .game-info-container {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .game-info {
+    color: #FFBB89;
+    font-size: 2em;
+  }
+  
+  .game-container {
+    margin-bottom: 2vh;
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    grid-gap: 10px;
+    justify-content: center;
+    perspective: 500px;
+    
+    
+  }
+  
+  .cards{
+    
+    position: relative;
+    cursor: url("Assets/Cursors/GhostHover.cur"), auto;
+    height: 150px;
+    width: 100px;
+  }
+  
+  .card-face {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+    transition: transform 500ms ease-in-out;
+    backface-visibility: hidden;
+  }
+  
+  .cards.visible .card-back {
+    transform: rotateY(-180deg); 
+  }
+  
+  .cards.visible .card-front {
+    transform: rotateY(0); 
+  }
+  
+  .cards.matched .card-front .card-value {
+    animation: dance 1s linear infinite 500ms;
+  }
+  
+  .card-back {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 5px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    transform: rotateY(0); 
+    width: 100%;
+    height: 100%;
+  }
+  
+  .cob-web {
+    position: absolute;
+    transition: width 100ms ease-in-out, height 100ms ease-in-out;
+    width: 47px;
+    height: 47px;
+  }
+  
+  .card-face:hover .cob-web {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .spider {
+    width: 100%;
+    align-self: center;
+    transition: transform 100ms ease-in-out;
+    transform: translateY(-10px);
+  }
+  
+  .card-back:hover .spider {
+    transform: translateY(0);
+  }
+  
+  .card-value {
+    position: relative;
+    transition: transform 100ms ease-in-out;
+    transform: scale(.9);
+  }
+  
+  .card-front:hover .card-value {
+    transform: scale(1);
+  }
+  
+  .card-front {
+    background-color: #c2c2c2;
+    border-color: #333;
+    transform: rotateY(180deg);
+  }
+  
+  .overlay-text {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #FF6D00;
+    font-family: Creepy, serif;
+    transition: background-color 500ms, font-size 500ms;
+  }
+  
+  .overlay-text-small {
+    font-size: .3em;
+  }
+  
+  .overlay-text.visible {
+    display: flex;
+    animation: overlay-grow 500ms forwards;
+  }
+  
+  @keyframes dance {
+    0%, 100% {
+      transform: rotate(0)
+    }
+    25% {
+      transform: rotate(-30deg)
+    }
+    75% {
+      transform: rotate(30deg)
+    }
+  }
+  
+  @keyframes overlay-grow {
+    from {
+      background-color: rgba(0, 0, 0, 0);
+      font-size: 0;
+    }
+    to {
+      background-color: rgba(0, 0, 0, .8);
+      font-size: 10em;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .game-container {
+      grid-template-columns: repeat(3, auto)
+    }
+    
+  
+    .game-info-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  @keyframes bg-animation{
+    0% {background-position: left;}
+    100% {background-position: right;}
+  }
+  
