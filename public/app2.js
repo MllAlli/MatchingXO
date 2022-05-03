@@ -34,6 +34,52 @@ startBtn.addEventListener('click', () =>{
     matching.style.display = 'flex'
 })
 
+const toStatBtn = document.querySelector('#toStat-btn')
+toStatBtn.addEventListener('click', () =>{
+
+    wait.style.display = 'none'
+    ttt.style.display = 'none'
+    matching.style.display = 'none'
+    userTab.style.display = 'flex'
+    statPage.style.display = 'flex'
+    home.style.display = 'none'
+})
+
+const toWaitBtn = document.querySelector('#toWait-btn')
+toWaitBtn.addEventListener('click', () =>{
+
+    wait.style.display = 'flex'
+    ttt.style.display = 'none'
+    matching.style.display = 'none'
+    userTab.style.display = 'flex'
+    statPage.style.display = 'none'
+    home.style.display = 'none'
+})
+
+const fromAnnounceToStatBtn = document.querySelector('#fromAnnounceToStat')
+fromAnnounceToStatBtn.addEventListener('click', () =>{
+
+    announceModal.style.display = 'none'
+    wait.style.display = 'none'
+    ttt.style.display = 'none'
+    matching.style.display = 'none'
+    userTab.style.display = 'flex'
+    statPage.style.display = 'flex'
+    home.style.display = 'none'
+})
+
+const fromAnnounceToWaitBtn = document.querySelector('#fromAnnounceToWait')
+fromAnnounceToWaitBtn.addEventListener('click', () =>{
+
+    announceModal.style.display = 'none'
+    wait.style.display = 'flex'
+    ttt.style.display = 'none'
+    matching.style.display = 'none'
+    userTab.style.display = 'flex'
+    statPage.style.display = 'none'
+    home.style.display = 'none'
+})
+
 
 // const nextBtn = document.querySelector('#goToTTT')
 // nextBtn.addEventListener('submit', goToTTT)
@@ -60,14 +106,19 @@ const wait = document.querySelector('.waiting')
 const matching = document.querySelector('.matching')
 const ttt = document.querySelector('.ttt')
 const userTab = document.querySelector('.dropdown')
+const statPage = document.querySelector('.statPage')
+const announceModal = document.querySelector('#announceModal')
 wait.style.display = 'none'
 userTab.style.display = 'none'
 ttt.style.display = 'none'
 matching.style.display = 'none'
+statPage.style.display = 'none'
+announceModal.style.display = 'none'
 
 function setupUI(user){
     if(user){
         document.querySelector('#user-email').innerHTML = user.email + '&emsp;';
+        document.querySelector("#playerStatTag").innerHTML = user.email + `'s Stat`;
         home.style.display = 'none'
         wait.style.display = 'flex'
         userTab.style.display = 'flex'
@@ -77,6 +128,8 @@ function setupUI(user){
         userTab.style.display = 'none'
         ttt.style.display = 'none'
         matching.style.display = 'none'
+        statPage.style.display = 'none'
+        announceModal.style.display = 'none'
     }
 }
 /* Set Up UI */

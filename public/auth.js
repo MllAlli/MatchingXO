@@ -29,9 +29,11 @@ firebase.auth().onAuthStateChanged((user) => {
 })
 
 
-firebase.auth().onAuthStateChanged((user)=>{
-    console.log('User: ', user)
+firebase.auth().onAuthStateChanged((user) => {
+    console.log('User: ', user);
+    // getList(user)
     setupUI(user)
+    //loadInfo(user)
 })
 
 
