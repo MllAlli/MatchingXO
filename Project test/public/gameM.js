@@ -421,6 +421,22 @@ function getGameInfo(snapshot) {
                 ref.child(`game-${this.gameNumber}`).child("remove").remove()
             }, 1000);
         }
+        console.log(gameInfos.status)
+        if(gameInfos.status === 'end'){
+            if(parseInt(gameInfos.o_Pawn) < 5 ){
+                refInfo.child(`game-1`).update({
+                    o_Pawn : '5',
+                    x_Pawn : '13'
+                })
+            }
+            else if(parseInt(gameInfos.x_Pawn) < 5 ){
+                refInfo.child(`game-1`).update({
+                    x_Pawn : '5',
+                    o_Pawn : '13'
+                })
+            }
+        }
+
         if (data.child('tables').numChildren() === 36) {
             ref.child(`game-1`).update({
                 status : 'end'
